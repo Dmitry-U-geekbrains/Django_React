@@ -24,12 +24,12 @@ router.register('users', UserModelViewSet)
 router.register('article', ArticleModelViewSet)
 router.register('biography', BiographyModelViewSet)
 router.register('book', BookModelViewSet)
+router.register('my', MyAPIView, basename='my')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    path('myapi/', MyAPIView.as_view()),
 ]
 
 
