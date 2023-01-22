@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const BookItem = ({ item }) => {
+const BookItem = ({item}) => {
     return (
         <tr>
             <td>{item.id}</td>
@@ -10,7 +10,7 @@ const BookItem = ({ item }) => {
         </tr>
     )
 }
-const BookList = ({ items }) => {
+const BookList = ({items}) => {
     return (
         <table>
             <tr>

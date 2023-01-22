@@ -8,6 +8,9 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
+from django_filters import rest_framework as filters
+from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
+
 
 
 class AuthorPaginator(LimitOffsetPagination):
@@ -15,6 +18,7 @@ class AuthorPaginator(LimitOffsetPagination):
 
 
 class AuthorModelViewSet(ModelViewSet):
+    permission_classes = [AllowAny]
     queryset = Author.objects.all()
     serializer_class = AuthorModelSerializer
     filterset_fields = ['first_name', 'last_name', 'birthday_year']
