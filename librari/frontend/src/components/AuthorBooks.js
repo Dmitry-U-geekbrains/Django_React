@@ -20,14 +20,14 @@ const BookItem = ({ item }) => {
 
 const AuthorBookList = ({ items }) => {
     let { id } = useParams();
-    let filtered_items = items.filter((item) => item.author.id == id)
+    let filtered_items = items.filter((item) => item.author.id === id)
     return (
         <table>
             <th>
                 ID
             </th>
             <th>
-                First_name
+                Name
             </th>
             <th>
                 Author
