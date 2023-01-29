@@ -26,7 +26,7 @@ class ArticleModelSerializer(HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class BookModelSerializer(HyperlinkedModelSerializer):
+class BookModelSerializer(ModelSerializer):
     class Meta:
         model = Book
         fields = '__all__'
