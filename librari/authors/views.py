@@ -9,10 +9,10 @@ from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters import rest_framework as filters
 from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from django.contrib.auth.models import User
 from .serializers import UserSerializer, UserSerializerWithFullName
-
+from .serializers import AuthorSerializer, AuthorSerializerBase, BookSerializer,BookSerializerBase
 
 class AuthorPaginator(LimitOffsetPagination):
     default_limit = 10
@@ -80,3 +80,21 @@ class UserListAPIView(generics.ListAPIView):
         if self.request.version == '0.2':
             return UserSerializerWithFullName
         return UserSerializer
+
+class AuthorViewSet(viewsets.ModelViewSet):
+    serializer_class = AuthorSerializer
+    queryset = Author.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.version == '2.0':
+            return AuthorSerializerBase
+        return AuthorSerializer
+
+class BookViewSet(viewsets.ModelViewSet):
+    serializer_class = BookSerializer
+    queryset = Book.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return BookSerializer
+        return BookSerializerBase
