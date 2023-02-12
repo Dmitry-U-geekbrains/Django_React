@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'authors',
     'django_filters',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -143,8 +144,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    # 'DEFAULT_VERSIONING_CLASS':'rest_framework.versioning.QueryParameterVersioning',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 2
 
 }
+

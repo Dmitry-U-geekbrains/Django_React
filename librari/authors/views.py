@@ -1,7 +1,6 @@
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from .models import Author, User, Book, Article, Biography
 from .serializers import AuthorModelSerializer, UserModelSerializer, BookModelSerializer, ArticleModelSerializer, BiographyModelSerializer
-from .serializers import AuthorModelSerializer, BookModelSerializer, ArticleModelSerializer, BiographyModelSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, ListAPIView
@@ -10,7 +9,9 @@ from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from django_filters import rest_framework as filters
 from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
-
+from rest_framework import generics
+from django.contrib.auth.models import User
+from .serializers import UserSerializer, UserSerializerWithFullName
 
 
 class AuthorPaginator(LimitOffsetPagination):
@@ -60,7 +61,7 @@ class MyAPIView(CreateAPIView, ListAPIView):
 
 
 class MyAPIView(ViewSet):
-    def list(self, request):
+    def list(self, request,):
         authors = Author.objects.all()
         serializer = AuthorModelSerializer(authors, many=True)
         return Response(serializer.data)
@@ -69,3 +70,13 @@ class MyAPIView(ViewSet):
 @action(detail=False, methods=['get'])
 def blablabla(self, request):
     return Response({'data': 'DATA'})
+
+
+class UserListAPIView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_serializer_class(self):
+        if self.request.version == '0.2':
+            return UserSerializerWithFullName
+        return UserSerializer
